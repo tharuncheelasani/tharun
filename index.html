@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Feedback Survey</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #f2f6ff;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 5px;
+        }
+
+        .radio-group label {
+            font-weight: normal;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #4338ca;
+        }
+
+        .output {
+            margin-top: 25px;
+            background: #f9fafb;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Student Feedback Survey</h2>
+
+    <form id="surveyForm">
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="name" required>
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="email" required>
+        </div>
+
+        <div class="form-group">
+            <label>Course</label>
+            <select id="course" required>
+                <option value="">Select Course</option>
+                <option value="Web Development">Web Development</option>
+                <option value="Data Science">Data Science</option>
+                <option value="AI & ML">AI & ML</option>
+                <option value="Cyber Security">Cyber Security</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Overall Rating</label>
+            <div class="radio-group">
+                <label><input type="radio" name="rating" value="Excellent" required> Excellent</label>
+                <label><input type="radio" name="rating" value="Good"> Good</label>
+                <label><input type="radio" name="rating" value="Average"> Average</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Comments</label>
+            <textarea id="comments"></textarea>
+        </div>
+
+        <button type="submit">Submit Survey</button>
+    </form>
+
+    <div class="output" id="output" style="display:none;">
+        <h3>Stored Survey Data (JSON)</h3>
+        <pre id="jsonData"></pre>
+    </div>
+</div>
+
+<script>
+    const surveyData = [];
+
+    document.getElementById("surveyForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const formData = {
+            name: document.getElementById("name").value,
+            email: document.getElementById("email").value,
+            course: document.getElementById("course").value,
+            rating: document.querySelector('input[name="rating"]:checked').value,
+            comments: document.getElementById("comments").value
+        };
+
+        surveyData.push(formData);
+
+        document.getElementById("output").style.display = "block";
+        document.getElementById("jsonData").textContent =
+            JSON.stringify(surveyData, null, 4);
+
+        this.reset();
+    });
+</script>
+
+</body>
+</html>
